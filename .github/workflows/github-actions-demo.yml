@@ -16,20 +16,21 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
-      - name: Push an artifact
-        run: |
-          echo "Hello world" >> ./hello_world.html
 
   Upload-Artifact:
     name: Upload an artifact
     needs: Explore-GitHub-Actions
     runs-on: ubuntu-latest
     steps:
+      - name: Push an artifact
+        run: |
+          echo "Hello world" >> ./index.html
+
       - name: Archive the artifact
         uses: actions/upload-artifact@v3
         with:
           name: github-pages
-          path: ./hello_world.html
+          path: ./index.html
 
   Upload-Artifact-pages:
     name: Deploy pages
