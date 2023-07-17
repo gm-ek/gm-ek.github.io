@@ -35,6 +35,9 @@ jobs:
       id-token: write
     runs-on: ubuntu-latest
     steps:
+      - name: Debug data
+        run: 'echo " secrets.GITHUB_TOKEN ${{ secrets.GITHUB_TOKEN }}"'
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
