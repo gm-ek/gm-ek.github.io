@@ -22,6 +22,7 @@ jobs:
 
   Upload-Artifact:
     name: Upload an artifact
+    needs: Explore-GitHub-Actions
     runs-on: ubuntu-latest
     steps:
       - name: Archive the artifact
@@ -35,7 +36,7 @@ jobs:
     environment:
       name: github-pages
       url: "${{ steps.deployment.outputs.page_url }}"
-    needs: Explore-GitHub-Actions
+    needs: Upload-Artifact
     permissions:
       pages: write
       id-token: write
