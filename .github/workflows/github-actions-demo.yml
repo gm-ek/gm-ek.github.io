@@ -1,0 +1,46 @@
+name: GitHub Actions Demo
+run-name: "${{ github.actor }} is testing out GitHub Actions \U0001F680"
+"on":
+  - workflow_dispatch
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - run: "echo \"\U0001F389 The job was automatically triggered by a ${{ github.event_name }} event.\""
+      - run: "echo \"\U0001F427 This job is now running on a ${{ runner.os }} server hosted by GitHub!\""
+      - run: "echo \"\U0001F50E The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}.\""
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: "echo \"\U0001F4A1 The ${{ github.repository }} repository has been cloned to the runner.\""
+      - run: "echo \"\U0001F5A5️ The workflow is now ready to test your code on the runner.\""
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - name: Push an artifact
+        run: |
+          echo "Hello world" >> ./hello_world.html
+      - name: Archive the artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: github-pages
+          path: ./hello_world.html
+  Upload-Artifact-pages:
+    name: Upload pages
+    environment:
+      name: github-pages
+      url: "${{ steps.deployment.outputs.page_url }}"
+    needs: Explore-GitHub-Actions
+    permissions:
+      pages: write
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+        with:
+          token: "${{ secrets.GITHUB_TOKEN }}"
+  Finish-Job:
+    runs-on: ubuntu-latest
+    steps:
+      - run: "echo \"\U0001F34F This job's status is ${{ job.status }}.\""
