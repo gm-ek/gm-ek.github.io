@@ -27,9 +27,10 @@ jobs:
           echo "Hello world" >> ./index.html
 
       - name: Archive the artifact
-        uses: actions/upload-artifact@v3
+      #  uses: actions/upload-artifact@v3
+        uses: actions/upload-pages-artifact@v2
         with:
-          name: github-pages
+          #name: github-pages
           path: ./index.html
 
   Upload-Artifact-pages:
