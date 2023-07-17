@@ -22,16 +22,21 @@ jobs:
     needs: Explore-GitHub-Actions
     runs-on: ubuntu-latest
     steps:
-      - name: Push an artifact
+      - name: Create an artifact
         run: |
           echo "Hello world" >> ./index.html
+
+      - name: Create a tar file
+        run: tar -cf content.tar index.html
+
+      - run: gzip content.tar
 
       - name: Archive the artifact
       #  uses: actions/upload-artifact@v3
         uses: actions/upload-pages-artifact@v2
         with:
           #name: github-pages
-          path: ./index.html
+          path: ./content.tar.gz
 
   Upload-Artifact-pages:
     name: Deploy pages
